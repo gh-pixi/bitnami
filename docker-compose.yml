@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  nginx:
+    image: bitnami/nginx:latest
+    ports:
+      - 80:8080
+    volumes:
+      - ./nginx-vhost/myapp.conf:/bitnami/nginx/conf/vhosts/myapp.conf
+      - .:/app
+
+  mariadb:
+    image: bitnami/mariadb:latest
+    environment:
+      - MARIADB_ROOT_PASSWORD=cb37trwso*
+    volumes:
+      - mariadb_data:/bitnami/mariadb
+
+  php-fpm:
+    image: bitnami/php-fpm:latest
+    volumes:
+      - .:/app
+
+volumes:
+  mariadb_data:
+    driver: local
